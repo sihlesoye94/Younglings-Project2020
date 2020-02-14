@@ -1,0 +1,76 @@
+// Firebase configuration
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyB7nvioGeFv8DM0G_9G95sGt4NQH-1yxS0",
+	    authDomain: "diego-s-portfolio.firebaseapp.com",
+	    databaseURL: "https://diego-s-portfolio.firebaseio.com",
+	    projectId: "diego-s-portfolio",
+	    storageBucket: "",
+	    messagingSenderId: "1091733114136",
+	    appId: "1:1091733114136:web:02a5d25aa5867c7c"
+	  };
+ // Initialize Firebase
+  		firebase.initializeApp(firebaseConfig);
+
+//Reference messages collection
+		var messagesRef = firebase.database().ref("messages")
+
+ 
+// Listen for form submit 
+		document.getElementById('contactForm').addEventListener('submit', submitForm);
+
+
+// submit form 
+		function submitForm(e){
+			e.preventDefault();
+			
+	
+//Get values
+
+	 	var name = getInputVal('name');
+	 	var tel = getInputVal('tel');
+	 	var email = getInputVal('email');
+	 	var message = getInputVal('message');
+
+// Save message 	
+ 		saveMessage(name, tel, email, message)
+
+ 		// Show alert
+  document.querySelector('.alert').style.display = 'block';
+
+  // Hide alert after 3 seconds
+  setTimeout(function(){
+    document.querySelector('.alert').style.display = 'none';
+  },3000);
+
+ // Clear form
+  document.getElementById('contactForm').reset();
+
+ }
+
+
+
+//Function to get form values
+		function getInputVal(id){
+			return document.getElementById(id).value;
+
+	}
+
+
+
+// Save message to firebase
+		function saveMessage(name, tel,email, message){
+			var newMessageRef = messagesRef.push();
+			newMessageRef.set({
+				name: name,
+				tel: tel,
+				email: email,
+				message:message
+
+			});
+		 }
+
+// recaptcha function
+		 document.getElementById("submit").disabled = true;
+		 function enableBtn(){
+			document.getElementById("submit").disabled = false;
+		   }
